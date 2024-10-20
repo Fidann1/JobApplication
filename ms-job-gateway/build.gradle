@@ -67,6 +67,10 @@ dependencyManagement {
     }
 }
 
+bootJar{
+    archiveFileName='ms-gateway.jar'
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }

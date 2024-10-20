@@ -38,6 +38,13 @@ spring:
             - RewritePath=/api/(?<segment1>connection|experience|skill|user)/(?<segment2>.*), /api/v1/${segment1}/${segment2}
             - AuthenticationFilter
 
+        - id: ms-search
+          uri: lb://MS-SEARCH
+          predicates:
+            - Path=/api/search/job/**
+          filters:
+            - RewritePath=/api/search/job/(?<segment>.*), /api/v1/search/job/${segment}
+
   main:
     web-application-type: reactive
 

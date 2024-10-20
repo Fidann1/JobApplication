@@ -1,14 +1,12 @@
 package com.example.msjob.entity;
 
 import com.example.msjob.enums.ExperienceLevel;
-import com.example.msjob.enums.JobStatus;
 import com.example.msjob.enums.JobType;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Builder

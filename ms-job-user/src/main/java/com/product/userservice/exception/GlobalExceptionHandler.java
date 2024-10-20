@@ -38,6 +38,15 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
+    @ExceptionHandler(AlreadyExistsException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ErrorResponse handle(HttpServletRequest request,AlreadyExistsException e) {
+        return ErrorResponse.builder()
+                .message(e.getMessage())
+                .status(BAD_REQUEST.value())
+                .build();
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(BAD_REQUEST)
     public ErrorResponse handleMethodArgumentNotValidException(HttpServletRequest request, MethodArgumentNotValidException e) {

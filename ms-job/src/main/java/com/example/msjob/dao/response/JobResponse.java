@@ -1,7 +1,6 @@
 package com.example.msjob.dao.response;
 
 import com.example.msjob.enums.ExperienceLevel;
-import com.example.msjob.enums.JobStatus;
 import com.example.msjob.enums.JobType;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,8 +24,6 @@ public class JobResponse {
     private Double maxSalary;
     private JobType type;
     private Long recruiterId;
-    private JobStatus jobStatus;
     private LocalDateTime postedDate;
-    private JobStatus status;
     private Long companyId;
 }

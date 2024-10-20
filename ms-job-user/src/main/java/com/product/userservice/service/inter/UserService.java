@@ -24,4 +24,6 @@ public interface UserService {
     CompanyUserResponse findUserCompanyByUsername(String username);
 
     UserResponse findUserByUsernameOrEmail(String email, String username);
+
+    UserResponse findUserById(Long id);
 }

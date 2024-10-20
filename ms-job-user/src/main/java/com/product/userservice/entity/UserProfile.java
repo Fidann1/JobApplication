@@ -15,20 +15,20 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class UserProfile {
     @Id
-    @SequenceGenerator(name = "user_id", sequenceName = "user_id",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id")
+    @SequenceGenerator(name = "user_profile_id", sequenceName = "user_profile_id",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_profile_id")
     private Long id;
     private String address;
     private Integer number;
     private Long currentCompanyId;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userProfile")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "userProfile")
     private Set<SkillEntity> skills;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "userProfile")
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "userProfile")
     private UserEntity user;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "userProfile")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "userProfile")
     private Set<ExperienceEntity> experiences;
 
 

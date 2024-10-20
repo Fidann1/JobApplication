@@ -33,6 +33,10 @@ dependencyManagement {
     }
 }
 
+bootJar{
+    archiveFileName= 'ms-discovery.jar'
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }

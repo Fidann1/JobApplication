@@ -52,10 +52,26 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/ms-job-search" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/ms-job-search" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/ms-job-user" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/ms-job-user" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/ms-notification-job" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/ms-notification-job" />
           </set>
         </option>
       </GradleProjectSettings>

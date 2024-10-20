@@ -16,6 +16,7 @@ import com.product.userservice.exception.NotFoundException;
 import com.product.userservice.exception.UnauthorizedException;
 import com.product.userservice.mapper.UserEntityMapper;
 import com.product.userservice.repository.SkillRepository;
+import com.product.userservice.repository.UserProfileRepository;
 import com.product.userservice.repository.UserRepository;
 import com.product.userservice.service.inter.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final SkillRepository skillRepository;
     private final JobClient jobClient;
+    private final UserProfileRepository userProfileRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, SkillRepository skillRepository, JobClient jobClient) {
+    public UserServiceImpl(UserRepository userRepository, SkillRepository skillRepository, JobClient jobClient, UserProfileRepository userProfileRepository) {
         this.userRepository = userRepository;
         this.skillRepository = skillRepository;
         this.jobClient = jobClient;
+        this.userProfileRepository = userProfileRepository;
     }
 
     @Override
@@ -124,7 +127,6 @@ public class UserServiceImpl implements UserService {
         userEntity.setName(userRequest.getName());
         userEntity.setSurname(userRequest.getSurname());
         userEntity.setEmail(userRequest.getEmail());
-        userEntity.setPassword(userRequest.getPassword());
         userEntity.setUserProfile(userProfile);
         userRepository.save(userEntity);
         return USER_DETAILS_UPDATED.getMessage();
@@ -140,7 +142,11 @@ public class UserServiceImpl implements UserService {
         skillEntities.ifPresent(
                 skills::addAll
         );
-        userEntity.getUserProfile().setSkills(skills);
+        UserProfile userProfile = userEntity.getUserProfile();
+        userProfile.setSkills(skills);
+        skills.forEach(skillEntity -> skillEntity.getUserProfile().add(userProfile));
+        userProfileRepository.save(userProfile);
+        skillRepository.saveAll(skills);
 
         return SKILLS_ADDED_TO_USER.getMessage();
     }
@@ -205,6 +211,18 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmailOrUsername(email,username)
                 .map(USER_ENTITY_MAPPER::toUserResponse)
                 .orElse(null);
+    }
+
+    @Override
+    public UserResponse findUserById(Long id) {
+        return userRepository.findById(id)
+                .map(USER_ENTITY_MAPPER::toUserResponse)
+                .orElseThrow(()-> new NotFoundException(
+                        format(
+                                USER_NOT_FOUND_WITH_ID.getMessage(),
+                                id
+                        )
+                ));
     }
 
     private UserEntity getUserEntityById(Long userId) {

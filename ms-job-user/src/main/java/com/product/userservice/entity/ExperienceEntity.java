@@ -32,7 +32,7 @@ public class ExperienceEntity {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_profile_id")
     private UserProfile userProfile;
 

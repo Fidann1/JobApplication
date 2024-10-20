@@ -10,7 +10,6 @@ import com.example.msjob.entity.JobSkillEntity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.example.msjob.enums.JobStatus.*;
 import static com.example.msjob.mapper.JobSkillMapper.*;
 
 public enum JobMapper {

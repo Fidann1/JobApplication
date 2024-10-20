@@ -33,10 +33,10 @@ public class RouteValidator {
     );
 
     private final Map<String,List<String>> routeRole = Map.of(
-            "ADMIN", List.of("/api/v1/company/**"),
+            "ADMIN", List.of("/api/v1/company/**","/api/v1/skill/**","/api/v1/user/**"),
             "OWNER",List.of("/api/v1/application/**","/api/v1/company/**","/api/v1/job/**","/api/v1/connection/**","/api/v1/experience/","/api/v1/skill/**","/api/v1/user/**"),
             "USER",List.of("/api/v1/application/**","/api/v1/connection/**","/api/v1/experience/**","/api/v1/skill/**","/api/v1/user/**"),
-            "RECRUITER",List.of("/api/v1/application/**", "/api/v1/job/**","/api/v1/connection/**","/api/v1/experience/**","/api/v1/skill/**","/api/v1/user/**")
+            "RECRUITER",List.of("/api/v1/application/**", "/api/v1/job/**","/api/v1/connection/**","/api/v1/experience/**","/api/v1/skill/**","/api/v1/user/**","/api/v1/company/**")
 
     );
 

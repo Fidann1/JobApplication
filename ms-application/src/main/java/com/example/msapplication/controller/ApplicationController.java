@@ -23,39 +23,37 @@ public class ApplicationController {
 
 
     @GetMapping
-    public ResponseEntity<List<ApplicationResponse>> getAllApplications(){
-        return ResponseEntity.ok(applicationService.getAllApplications()) ;
+    public ResponseEntity<List<ApplicationResponse>> getAllApplications() {
+        return ResponseEntity.ok(applicationService.getAllApplications());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ApplicationResponse> getApplicationById(@PathVariable Long id){
+    public ResponseEntity<ApplicationResponse> getApplicationById(@PathVariable Long id) {
         return ResponseEntity.ok(applicationService.getApplicationById(id));
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> createApplication(@RequestParam Long jobId,
                                                     @RequestParam MultipartFile resume,
-                                                    @RequestHeader String username){
-        return ResponseEntity.ok(applicationService.createApplication(jobId,username,resume));
+                                                    @RequestHeader String username) {
+        return ResponseEntity.ok(applicationService.createApplication(jobId, username, resume));
     }
 
-    @PutMapping(value = "{applicationId}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "{applicationId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 
     public ResponseEntity<String> updateResume(@PathVariable Long applicationId,
-                                               @RequestParam MultipartFile resume){
-       return ResponseEntity.ok(applicationService.updateResume(applicationId,resume));
+                                               @RequestParam MultipartFile resume) {
+        return ResponseEntity.ok(applicationService.updateResume(applicationId, resume));
     }
 
     @PutMapping("{id}/status")//by recruiter or admin
-    public ResponseEntity<String> updateApplicationStatus(@RequestBody StatusEnum statusEnum, @PathVariable Long id,
-                                                          @RequestHeader String username){
-        return ResponseEntity.ok(applicationService.updateApplicationStatus(statusEnum,id,username));
+    public ResponseEntity<String> updateApplicationStatus(@RequestBody StatusEnum statusEnum, @PathVariable Long id) {
+        return ResponseEntity.ok(applicationService.updateApplicationStatus(statusEnum, id));
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteApplication(Long id,@RequestHeader
-                                                    String username){
-        return ResponseEntity.ok(applicationService.deleteApplication(id,username));
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteApplication(@PathVariable Long id) {
+        return ResponseEntity.ok(applicationService.deleteApplication(id));
     }
 
 

@@ -15,15 +15,14 @@ spring:
 
   kafka:
     consumer:
-      bootstrap-servers: localhost:9092
       group-id: "job-service"
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-       spring:
-          json:
-            trusted:
-              packages: "com.product.msapplication.event,com.example.msjob.events"
+        spring.json.trusted.packages: '*'
+        spring.json.type.mapping: jobApplicationEvent:com.example.msjob.event.JobApplicationEvent
+      auto-offset-reset: earliest
+    bootstrap-servers: localhost:9092
 
 
 eureka:

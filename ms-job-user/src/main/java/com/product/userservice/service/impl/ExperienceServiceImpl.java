@@ -12,6 +12,7 @@ import com.product.userservice.exception.UnauthorizedException;
 import com.product.userservice.repository.ExperienceRepository;
 import com.product.userservice.repository.UserRepository;
 import com.product.userservice.service.inter.ExperienceService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,7 +69,7 @@ public class ExperienceServiceImpl implements ExperienceService {
 
         ExperienceEntity experienceEntity = getExperienceEntityById(id);
 
-        if(hasPermission(experienceEntity,userEntity)){
+        if (hasPermission(experienceEntity, userEntity)) {
             experienceEntity.setCompanyId(experienceRequest.getCompanyId());
             experienceEntity.setDescription(experienceRequest.getDescription());
             experienceEntity.setJobName(experienceRequest.getJobName());
@@ -87,7 +88,6 @@ public class ExperienceServiceImpl implements ExperienceService {
         throw new UnauthorizedException(NO_PERMISSION.getMessage());
 
 
-
     }
 
     @Override
@@ -96,27 +96,29 @@ public class ExperienceServiceImpl implements ExperienceService {
 
         ExperienceEntity experienceEntity = getExperienceEntityById(id);
 
-        if(hasPermission(experienceEntity,userEntity)){
-            experienceRepository.delete(experienceEntity);
-            return EXPERIENCE_DELETED.getMessage();
+        if (!hasPermission(experienceEntity,userEntity)) {
+            throw new UnauthorizedException(NO_PERMISSION.getMessage());
         }
+        userEntity.getUserProfile().getExperiences().remove(experienceEntity);
 
-        throw new UnauthorizedException(NO_PERMISSION.getMessage());
+        experienceRepository.deleteById(id);
+
+        return EXPERIENCE_DELETED.getMessage();
 
     }
 
 
     private Boolean hasPermission(ExperienceEntity experienceEntity, UserEntity userEntity) {
-        return userEntity.getUserProfile().getExperiences().contains(experienceEntity);
+            return userEntity.getUserProfile().getExperiences().contains(experienceEntity);
     }
 
-    private CompanyResponse getCompanyById(Long companyId){
-        return  jobClient.getCompanyById(companyId).getBody();
+    private CompanyResponse getCompanyById(Long companyId) {
+        return jobClient.getCompanyById(companyId).getBody();
     }
 
-    private UserEntity getUserByUsername(String username){
+    private UserEntity getUserByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(()-> new NotFoundException(
+                .orElseThrow(() -> new NotFoundException(
                         format(
                                 USER_NOT_FOUND_WITH_NAME.getMessage(),
                                 username
@@ -124,7 +126,7 @@ public class ExperienceServiceImpl implements ExperienceService {
                 ));
     }
 
-    private ExperienceEntity getExperienceEntityById(Long id){
+    private ExperienceEntity getExperienceEntityById(Long id) {
         return experienceRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
                         format(

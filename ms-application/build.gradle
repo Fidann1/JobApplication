@@ -48,6 +48,10 @@ dependencyManagement {
     }
 }
 
+bootJar{
+    archiveFileName= 'ms-application.jar'
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }

@@ -3,6 +3,8 @@ package com.product.userservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @Data
 @AllArgsConstructor
@@ -17,7 +19,8 @@ public class SkillEntity {
     private String name;
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_profile_id")
-    private UserProfile userProfile;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_skill", joinColumns = @JoinColumn(name = "skill_id"),
+    inverseJoinColumns = @JoinColumn(name = "user_profile_id"))
+    private List<UserProfile> userProfile;
 }

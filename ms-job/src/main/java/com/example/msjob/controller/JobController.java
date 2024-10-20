@@ -1,6 +1,7 @@
 package com.example.msjob.controller;
 
 import com.example.msjob.dao.request.JobRequest;
+import com.example.msjob.dao.request.JobSearchCriteria;
 import com.example.msjob.dao.response.JobResponse;
 import com.example.msjob.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class JobController {
     private final JobService jobService;
 
     @Autowired
-    public JobController( JobService jobService) {
+    public JobController(JobService jobService) {
         this.jobService = jobService;
     }
 
@@ -35,27 +36,31 @@ public class JobController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createJob(@RequestBody JobRequest jobRequest,@RequestHeader String username) {
-         return ResponseEntity.ok(jobService.createJob(jobRequest,username));
+    public ResponseEntity<String> createJob(@RequestBody JobRequest jobRequest, @RequestHeader String username) {
+        return ResponseEntity.ok(jobService.createJob(jobRequest, username));
 
     }
 
     @PutMapping("{id}")
     public ResponseEntity<String> updateJob(@PathVariable Long id, @RequestBody JobRequest jobRequest, @RequestHeader String username) {
-        return ResponseEntity.ok(jobService.updateJobById(id,jobRequest,username));
+        return ResponseEntity.ok(jobService.updateJobById(id, jobRequest, username));
     }
 
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteJob(@PathVariable Long id,@RequestHeader String username) {
-        return ResponseEntity.ok(jobService.deleteJobById(id,username));
+    public ResponseEntity<String> deleteJob(@PathVariable Long id, @RequestHeader String username) {
+        return ResponseEntity.ok(jobService.deleteJobById(id, username));
     }
 
     @GetMapping("search")
-    public ResponseEntity<List<JobResponse>> searchJobs(@RequestParam String keyword){
+    public ResponseEntity<List<JobResponse>> searchJobs(@RequestParam String keyword) {
         return ResponseEntity.ok(jobService.searchJobs(keyword));
     }
 
+    @PostMapping("search/criteria")
+    public ResponseEntity<List<JobResponse>> searchJobsByCriteria(@RequestBody JobSearchCriteria jobSearchCriteria) {
+        return ResponseEntity.ok(jobService.searchJobsByCriteria(jobSearchCriteria));
+    }
 
 
 }

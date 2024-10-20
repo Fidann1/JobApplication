@@ -1,6 +1,7 @@
 package com.example.msjob.service;
 
 import com.example.msjob.dao.request.JobRequest;
+import com.example.msjob.dao.request.JobSearchCriteria;
 import com.example.msjob.dao.response.JobResponse;
 import org.springframework.stereotype.Service;
 
@@ -20,4 +21,6 @@ public interface JobService {
     List<JobResponse> searchJobs(String keyword);
 
     Boolean existsJobById(Long id);
+
+    List<JobResponse> searchJobsByCriteria(JobSearchCriteria jobSearchCriteria);
 }

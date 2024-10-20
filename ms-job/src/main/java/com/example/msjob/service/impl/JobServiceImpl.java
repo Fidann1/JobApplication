@@ -2,19 +2,22 @@ package com.example.msjob.service.impl;
 
 import com.example.msjob.client.UserClient;
 import com.example.msjob.dao.request.JobRequest;
+import com.example.msjob.dao.request.JobSearchCriteria;
 import com.example.msjob.dao.response.CompanyUserResponse;
 import com.example.msjob.dao.response.JobResponse;
 import com.example.msjob.dao.response.UserResponse;
 import com.example.msjob.entity.CompanyEntity;
 import com.example.msjob.entity.JobEntity;
 import com.example.msjob.entity.JobSkillEntity;
-import com.example.msjob.event.ApplicationMessage;
+import com.example.msjob.event.JobApplicationEvent;
 import com.example.msjob.exception.NotFoundException;
 import com.example.msjob.exception.UnauthorizedException;
 import com.example.msjob.repository.CompanyRepository;
 import com.example.msjob.repository.JobRepository;
 import com.example.msjob.repository.JobSkillRepository;
 import com.example.msjob.service.JobService;
+import com.example.msjob.specification.JobSpecification;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -160,13 +163,22 @@ public class JobServiceImpl implements JobService {
         return jobRepository.existsById(id);
     }
 
+    @Override
+    public List<JobResponse> searchJobsByCriteria(JobSearchCriteria jobSearchCriteria) {
+        JobSpecification specification = new JobSpecification(jobSearchCriteria);
+        List<JobEntity> jobs = jobRepository.findAll(specification);
+
+        return jobs.stream().map(JOB_MAPPER::mapToResponse).toList();
+    }
+
 
     @KafkaListener(
             topics = "job-application-topic",
             groupId = "job-service"
     )
-    public void incrementApplicationCount(ApplicationMessage applicationMessage){
-        jobRepository.incrementApplicationCount(applicationMessage.getJobId());
+    @Transactional
+    public void incrementApplicationCount(JobApplicationEvent jobApplicationEvent){
+        jobRepository.incrementApplicationCount(jobApplicationEvent.getJobId());
     }
 
 

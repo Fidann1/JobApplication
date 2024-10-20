@@ -19,7 +19,6 @@ public class UserRequest {
     @NotBlank(message = "Please write username")
     private String username;
 
-    @NotBlank(message = "Password should be written")
     private String password;
 
     @Email(message = "email should be written in correct format")

@@ -12,4 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface UserClient {
     @GetMapping("api/v1/user/username/{username}")
     ResponseEntity<UserResponse> findUserByUsername(@PathVariable String username);
+
+    @GetMapping("/api/v1/user/{id}")
+    ResponseEntity<UserResponse> findUserById(@PathVariable Long id);
 }

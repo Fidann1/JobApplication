@@ -30,6 +30,10 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<UserResponse> findUserById(@PathVariable Long id){
+        return ResponseEntity.ok(userService.findUserById(id));
+    }
     @GetMapping("username/{username}")
     public ResponseEntity<UserResponse> findUserByUsername(@PathVariable String username){
         return ResponseEntity.ok(userService.findByUsername(username));
@@ -81,7 +85,7 @@ public class UserController {
     }
 
     @PutMapping("skill")
-    public ResponseEntity<String> addSkill(@RequestBody List<String> skillNames, @RequestHeader String username){
+    public ResponseEntity<String> addSkill(@RequestParam List<String> skillNames, @RequestHeader String username){
         return ResponseEntity.ok(userService.addSkillToUser(skillNames,username));
     }
 

@@ -32,7 +32,7 @@ public class UserEntity {
     @JoinColumn(name ="userProfile_id", referencedColumnName ="id")
     private UserProfile userProfile;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "user_connections",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "connected_user_id")
