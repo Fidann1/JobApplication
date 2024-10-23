@@ -41,9 +41,9 @@ spring:
         - id: ms-search
           uri: lb://MS-SEARCH
           predicates:
-            - Path=/api/search/job/**
+            - Path=/api/search/**,
           filters:
-            - RewritePath=/api/search/job/(?<segment>.*), /api/v1/search/job/${segment}
+            - RewritePath=/api/search/(?<segment>.*), /api/v1/search/${segment}
 
   main:
     web-application-type: reactive

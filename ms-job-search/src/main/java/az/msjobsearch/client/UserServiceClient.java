@@ -10,7 +10,7 @@ import java.util.List;
 
 @FeignClient(name = "MS-USER")
 public interface UserServiceClient {
-    @GetMapping("api/v1/user/search/")
+    @GetMapping("api/v1/user/search")
     ResponseEntity<List<UserSearchResponse>> searchUsers(@RequestParam String keyword);
 
 }
