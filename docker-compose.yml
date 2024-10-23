@@ -71,6 +71,8 @@ services:
       - job-portal-net
     ports:
       - "8082:8082"
+    volumes:
+      - C:\Users\ASUS\Desktop\uploads:/app/uploads
   
     
   discovery-server:
@@ -194,6 +196,8 @@ services:
     ports:
       - "1080:1080"
       - "1025:1025"
+    networks:
+      - job-portal-net
     
 
 networks:

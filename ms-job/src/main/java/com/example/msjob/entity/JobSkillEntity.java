@@ -18,7 +18,9 @@ public class JobSkillEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "job_skill_id")
     private Long id;
 
-    private Long jobId;
+    @ManyToOne()
+    @JoinColumn(name = "job_id")
+    private JobEntity job;
 
     private Long skillId;
 }

@@ -100,7 +100,6 @@ public class CompanyServiceImpl implements CompanyService {
 
         if (userResponse != null && hasPermission(userResponse, companyEntity)) {
             companyRepository.delete(companyEntity);
-
             return COMPANY_DELETED.getMessage();
         }
         throw new UnauthorizedException(NO_PERMISSION.getMessage());

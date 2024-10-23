@@ -75,7 +75,7 @@ public class JobServiceImpl implements JobService {
             JobEntity jobEntity= JOB_MAPPER.mapToEntity(jobRequest,null,recruiterId);
             jobEntity = jobRepository.save(jobEntity);
 
-            jobSkillRepository.saveAll(JOB_SKILL_MAPPER.mapToEntity(jobRequest.getSkillIds(),jobEntity.getId()));
+            jobSkillRepository.saveAll(JOB_SKILL_MAPPER.mapToEntity(jobRequest.getSkillIds(),jobEntity));
         } else {
             CompanyEntity companyEntity = companyRepository.findById(companyId)
                     .orElseThrow(() -> new NotFoundException(
@@ -87,7 +87,7 @@ public class JobServiceImpl implements JobService {
             JobEntity jobEntity = JOB_MAPPER.mapToEntity(jobRequest,companyEntity,recruiterId);
             jobEntity = jobRepository.save(jobEntity);
 
-            jobSkillRepository.saveAll(JOB_SKILL_MAPPER.mapToEntity(jobRequest.getSkillIds(),jobEntity.getId()));
+            jobSkillRepository.saveAll(JOB_SKILL_MAPPER.mapToEntity(jobRequest.getSkillIds(),jobEntity));
 
 
         }
@@ -110,7 +110,7 @@ public class JobServiceImpl implements JobService {
 
         if (userResponse != null && hasPermission(userResponse, jobEntity)) {
 
-            List<JobSkillEntity> jobSkillEntities = JOB_SKILL_MAPPER.mapToEntity(jobRequest.getSkillIds(), jobEntity.getId());
+            List<JobSkillEntity> jobSkillEntities = JOB_SKILL_MAPPER.mapToEntity(jobRequest.getSkillIds(), jobEntity);
 
             jobEntity.setTitle(jobRequest.getTitle());
             jobEntity.setDescription(jobRequest.getDescription());
@@ -144,6 +144,7 @@ public class JobServiceImpl implements JobService {
 
         if (userResponse != null && hasPermission(userResponse, jobEntity)) {
             jobRepository.delete(jobEntity);
+            jobSkillRepository.deleteAllByJobId(id);
             return JOB_DELETED.getMessage();
         }
         throw new UnauthorizedException(NO_PERMISSION.getMessage());

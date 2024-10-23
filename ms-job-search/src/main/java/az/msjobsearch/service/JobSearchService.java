@@ -1,7 +1,7 @@
 package az.msjobsearch.service;
 
-import az.msjobsearch.dao.JobResponse;
-import az.msjobsearch.dao.JobSearchCriteria;
+import az.msjobsearch.dao.response.JobResponse;
+import az.msjobsearch.dao.request.JobSearchCriteria;
 
 import java.util.List;
 

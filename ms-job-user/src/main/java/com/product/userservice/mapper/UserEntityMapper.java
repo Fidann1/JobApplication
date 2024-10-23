@@ -4,6 +4,7 @@ import com.product.userservice.dto.request.UserRequest;
 import com.product.userservice.dto.response.CompanyResponse;
 import com.product.userservice.dto.response.DetailedUserResponse;
 import com.product.userservice.dto.response.UserResponse;
+import com.product.userservice.dto.response.UserSearchResponse;
 import com.product.userservice.entity.ExperienceEntity;
 import com.product.userservice.entity.SkillEntity;
 import com.product.userservice.entity.UserEntity;
@@ -49,7 +50,6 @@ public enum UserEntityMapper {
         return DetailedUserResponse.builder()
                 .id(userEntity.getId())
                 .name(userEntity.getName())
-                .email(userEntity.getEmail())
                 .surname(userEntity.getSurname())
                 .username(userEntity.getUsername())
                 .role(String.valueOf(userEntity.getRoleEnum()))
@@ -65,4 +65,13 @@ public enum UserEntityMapper {
                         .toList())
                 .build();
     }
+
+    public UserSearchResponse mapToUserSearchResponse(UserEntity userEntity) {
+        return UserSearchResponse.builder()
+                .name(userEntity.getName())
+                .surname(userEntity.getSurname())
+                .username(userEntity.getUsername())
+                .build();
+    }
+
 }

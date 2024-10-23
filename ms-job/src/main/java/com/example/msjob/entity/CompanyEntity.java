@@ -22,7 +22,7 @@ public class CompanyEntity {
     private String address;
     private Long ownerId;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company",cascade = CascadeType.ALL)
     private List<JobEntity> jobEntities;
 
 

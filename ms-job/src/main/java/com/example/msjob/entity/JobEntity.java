@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Builder
@@ -40,6 +41,9 @@ public class JobEntity {
     @ManyToOne
     @JoinColumn(name = "company_id")
     private CompanyEntity company;
+
+    @OneToMany(mappedBy = "job",cascade = CascadeType.ALL)
+    private List<JobSkillEntity> jobSkillEntityList;
 
 
 }

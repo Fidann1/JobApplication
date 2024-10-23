@@ -1,7 +1,7 @@
 package az.msjobsearch.client;
 
-import az.msjobsearch.dao.JobResponse;
-import az.msjobsearch.dao.JobSearchCriteria;
+import az.msjobsearch.dao.response.JobResponse;
+import az.msjobsearch.dao.request.JobSearchCriteria;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

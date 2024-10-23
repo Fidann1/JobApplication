@@ -1,9 +1,11 @@
 package com.product.userservice.controller;
 
 import com.product.userservice.dto.request.UserRequest;
+import com.product.userservice.dto.request.UserSearchCriteria;
 import com.product.userservice.dto.response.CompanyUserResponse;
 import com.product.userservice.dto.response.DetailedUserResponse;
 import com.product.userservice.dto.response.UserResponse;
+import com.product.userservice.dto.response.UserSearchResponse;
 import com.product.userservice.enums.RoleEnum;
 import com.product.userservice.service.inter.UserService;
 import jakarta.validation.Valid;
@@ -54,6 +56,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findUserCompanyByUsername(username));
     }
 
+    @GetMapping("search")
+    public ResponseEntity<List<UserSearchResponse>> searchUsers(@RequestParam String keyword){
+        return ResponseEntity.ok(userService.searchUsers(keyword));
+    }
+
     @PostMapping()
     public ResponseEntity<UserResponse> saveUser(@Valid @RequestBody UserRequest userRequest){
         return ResponseEntity.ok(userService.saveUser(userRequest));
@@ -79,7 +86,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getDetailedUserInfo(userId));
     }
 
-    @PutMapping()
+    @PutMapping("edit")
     public ResponseEntity<String> editUserDetails (@Valid @RequestBody UserRequest userRequest, @RequestHeader String username){
         return ResponseEntity.ok(userService.editUserDetails(userRequest,username));
     }

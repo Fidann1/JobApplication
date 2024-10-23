@@ -2,9 +2,7 @@ package az.msjobgateway.filter;
 
 import az.msjobgateway.exception.UnauthorizedException;
 import az.msjobgateway.util.PathMatcher;
-import net.bytebuddy.matcher.BooleanMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -32,33 +30,39 @@ public class RouteValidator {
             "/api/v1/auth/register/admin"
     );
 
-    private final Map<String,List<String>> routeRole = Map.of(
-            "ADMIN", List.of("/api/v1/company/**","/api/v1/skill/**","/api/v1/user/**"),
-            "OWNER",List.of("/api/v1/application/**","/api/v1/company/**","/api/v1/job/**","/api/v1/connection/**","/api/v1/experience/","/api/v1/skill/**","/api/v1/user/**"),
-            "USER",List.of("/api/v1/application/**","/api/v1/connection/**","/api/v1/experience/**","/api/v1/skill/**","/api/v1/user/**"),
-            "RECRUITER",List.of("/api/v1/application/**", "/api/v1/job/**","/api/v1/connection/**","/api/v1/experience/**","/api/v1/skill/**","/api/v1/user/**","/api/v1/company/**")
+    private final Map<String, List<String>> routeRole = Map.of(
+            "ADMIN", List.of("/api/v1/company/**", "/api/v1/skill/**", "/api/v1/user/**"),
+
+            "OWNER", List.of("/api/v1/application/**", "/api/v1/company/**", "/api/v1/job/**", "/api/v1/connection/**",
+                    "/api/v1/experience/", "/api/v1/user/skill", "/api/v1/user/edit", "/api/v1/user/connection/**"),
+
+            "USER", List.of("/api/v1/application/**", "/api/v1/connection/**", "/api/v1/experience/**",
+                    "/api/v1/user/skill", "/api/v1/user/edit", "/api/v1/user/connection/**"),
+
+            "RECRUITER", List.of("/api/v1/application/**", "/api/v1/job/**", "/api/v1/connection/**",
+                    "/api/v1/experience/**", "/api/v1/company/**", "/api/v1/user/skill", "/api/v1/user/edit",
+                    "/api/v1/user/connection/**")
 
     );
 
-    public void validateRoute(ServerWebExchange exchange,String role) {
+    public void validateRoute(ServerWebExchange exchange, String role) {
         ServerHttpRequest request = exchange.getRequest();
         List<String> endpoints = routeRole.get(role);
         List<Boolean> isMatched = new ArrayList<>();
-        for(String endpoint : endpoints) {
+        for (String endpoint : endpoints) {
             isMatched.add(pathMatcher.match(request.getURI().getPath(), endpoint));
         }
 
-        if(!isMatched.contains(true)) {
+        if (!isMatched.contains(true)) {
             throw new UnauthorizedException("Unauthorized");
         }
     }
 
 
     public Predicate<ServerHttpRequest> isSecured =
-            request-> openApiEndpoints.
+            request -> openApiEndpoints.
                     stream()
-                    .noneMatch(uri-> request.getURI().getPath().contains(uri));
-
+                    .noneMatch(uri -> request.getURI().getPath().contains(uri));
 
 
 }

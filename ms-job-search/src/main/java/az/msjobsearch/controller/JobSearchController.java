@@ -1,7 +1,7 @@
 package az.msjobsearch.controller;
 
-import az.msjobsearch.dao.JobResponse;
-import az.msjobsearch.dao.JobSearchCriteria;
+import az.msjobsearch.dao.response.JobResponse;
+import az.msjobsearch.dao.request.JobSearchCriteria;
 import az.msjobsearch.service.JobSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

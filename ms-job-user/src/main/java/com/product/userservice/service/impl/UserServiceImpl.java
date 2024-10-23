@@ -2,10 +2,8 @@ package com.product.userservice.service.impl;
 
 import com.product.userservice.client.JobClient;
 import com.product.userservice.dto.request.UserRequest;
-import com.product.userservice.dto.response.CompanyResponse;
-import com.product.userservice.dto.response.CompanyUserResponse;
-import com.product.userservice.dto.response.DetailedUserResponse;
-import com.product.userservice.dto.response.UserResponse;
+import com.product.userservice.dto.request.UserSearchCriteria;
+import com.product.userservice.dto.response.*;
 import com.product.userservice.entity.ExperienceEntity;
 import com.product.userservice.entity.SkillEntity;
 import com.product.userservice.entity.UserEntity;
@@ -223,6 +221,13 @@ public class UserServiceImpl implements UserService {
                                 id
                         )
                 ));
+    }
+
+    @Override
+    public List<UserSearchResponse> searchUsers(String keyword) {
+        return userRepository.searchUserEntities(keyword).stream()
+                .map(USER_ENTITY_MAPPER::mapToUserSearchResponse)
+                .toList();
     }
 
     private UserEntity getUserEntityById(Long userId) {

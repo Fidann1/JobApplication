@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface JobSkillRepository extends JpaRepository<JobSkillEntity,Long> {
+    void deleteAllByJobId(Long jobId);
 
 }

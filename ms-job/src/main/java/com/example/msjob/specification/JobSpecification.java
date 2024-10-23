@@ -16,7 +16,7 @@ import java.util.List;
 
 public class JobSpecification implements Specification<JobEntity> {
 
-    private  JobSearchCriteria criteria;
+    private final JobSearchCriteria criteria;
 
 
     public JobSpecification(JobSearchCriteria criteria) {
